@@ -1,5 +1,5 @@
 import argparse
-import verification_pipeline
+from verification_pipeline import VerificationPipeline
 
 parser = argparse.ArgumentParser(description='Verification Pipeline Args')
 parser.add_argument('--env_name', default="PushJoints-v3",
@@ -12,7 +12,7 @@ parser.add_argument('--n_tasks', type=int, default=2,
                     help='The number of tasks used in VLM-CaR')
 args = parser.parse_args()
 
-verifier = verification_pipeline(args.env_name, args.expert_traj_dir, args.random_traj_dir, args.n_tasks)
+verifier = VerificationPipeline(args.env_name, args.expert_traj_dir, args.random_traj_dir, args.n_tasks)
 checked = verifier.verify()
 
 print("Verification was attempted and the result was: " + str(checked))
