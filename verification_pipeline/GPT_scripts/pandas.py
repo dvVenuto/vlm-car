@@ -16,7 +16,7 @@ class PandaGym():
         self.initial_image = None
         self.initial_goal_item_location = None
 
-    def find_green_cube(self, image):
+    def find_green_cube_color_only(self, image):
 
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -107,7 +107,7 @@ class PandaGym():
 
 
 
-    def reward(self, image_path):
+    def check_and_progress(self, image_path):
         image = cv2.imread(image_path)
 
         reward = 0

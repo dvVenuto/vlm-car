@@ -36,18 +36,21 @@ class VerificationPipeline():
         for i in range(n_random_trajs):
             completed_tasks = 0
             
-            path = self.random_traj_dir + "/traj_" + str(i) + "/"
+            path = self.random_traj_dir + "/traj_" + str(i) + "/*"
+            print(path)
             frames = glob.glob(path)
-            frames = [int(x) for x in frames]
+            frames = [x for x in frames]
+            print(frames)
 
             for frame in frames:
-                completed = checker.check_and_progress(path + str(frame))
+                completed = self.checker.check_and_progress(path + str(frame))
+                print(completed)
                 if completed != 0:
                     completed_tasks += 1
             if completed_tasks >= self.n_tasks:
                 random_completed_trajs += 1
 
-        if random_completed_trajs / n_random_trajs >> 0.1:
+        if random_completed_trajs / n_random_trajs > 0.1:
             return False
         
         #Verify expert trajectories
@@ -60,18 +63,18 @@ class VerificationPipeline():
         for i in range(n_expert_trajs):
             completed_tasks = 0
             
-            path = self.expert_traj_dir + "/traj_" + str(i) + "/"
+            path = self.expert_traj_dir + "/traj_" + str(i) + "/*"
             frames = glob.glob(path)
-            frames = [int(x) for x in frames]
+            frames = [x for x in frames]
 
             for frame in frames:
-                completed = checker.check_and_progress(path + str(frame))
+                completed = self.checker.check_and_progress(path + str(frame))
                 if completed != 0:
                     completed_tasks += 1
             if completed_tasks >= self.n_tasks:
                 expert_completed_trajs += 1
 
-        if completed_trajs / n_expert_trajs == 1.0:
+        if expert_completed_trajs / n_expert_trajs == 1.0:
             return True
         else:
             return False
