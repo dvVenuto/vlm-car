@@ -37,13 +37,11 @@ class VerificationPipeline():
             completed_tasks = 0
             
             path = self.random_traj_dir + "/traj_" + str(i) + "/*"
-            print(path)
             frames = glob.glob(path)
             frames = [x for x in frames]
 
             for frame in frames:
                 completed = self.checker.check_and_progress(str(frame))
-                print(completed)
                 if completed != 0:
                     completed_tasks += 1
             if completed_tasks >= self.n_tasks:
